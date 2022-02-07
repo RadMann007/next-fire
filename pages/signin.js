@@ -71,7 +71,7 @@ const Signin = () => {
         
         <p className="my-2">Pas encore inscrit ? <Link href="/register"><a style={{color: 'crimson'}} className="navbar-brand">Inscription</a></Link></p>
         <button type="submit" className="btn btn-success w-100" >Se connecter</button><br /><br />
-        <button type="submit" className="btn btn-danger w-100" onClick={google}>Google</button>
+        <button type="submit" className="btn btn-danger w-100" onClick={google}><i class="fab fa-google"></i>oogle</button>
         </form>
       </div>
     )
