@@ -1,30 +1,23 @@
-import react,{ useState} from 'react';
+import react,{ useEffect, useState} from 'react';
 import { getMessaging, getToken  } from "firebase/messaging";
-import { collection, doc, setDoc  } from "firebase/firestore";
 import db from '../src/config/firebase.config';
 
 const Notification = () => {
 
-  const [token, setToken ] = useState()
+    useEffect(() =>{
+        
 
-  const addData = async (tkn) => {
-   
-    const notification = collection(db, "notification");
-
-    await setDoc(doc(notification, btoa(Math.random())), {
-        email: "online@gmail.com",
-        token: tkn
-     });
-     alert("Bravo! vous allez recevoir les notifs bientot!")
-}
+    })
 
     const notifMe = () => {
         const messaging = getMessaging();
         
         getToken(messaging, { vapidKey: 'BMUBWIJkRMyPNMZKUu3wS9kzxF61S5fkgJzzb7oNLgY09sCeWfvACzNOvu_uEngb9B1lhh3TddCKk6-M1jQPHVw' }).then((currentToken) => {
             if (currentToken) {
-              setToken(currentToken)
-                addData(currentToken);
+                // setFcm(currentToken)
+                // // alert(currentToken)
+                // addData(currentToken);
+                console.log(currentToken);
             } else {
               // Show permission request UI
               console.log('No registration token available. Request permission to generate one.');
@@ -47,7 +40,6 @@ const Notification = () => {
             <hr className="my-4"/>
             <p>Cliquer sur autorisé sur le popup</p>
             <button className="btn btn-primary btn-lg" onClick={notifMe}>Obtenir</button>
-            {token}
             </div>
       </div>
     )
