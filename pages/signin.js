@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import react, {useState} from 'react';
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 
 
@@ -12,6 +12,28 @@ const Signin = () => {
   const [password,setPassword] = useState();
 
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  const google = () => {
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+  }
 
   const submitForm = (e) => {
     e.preventDefault()
@@ -47,8 +69,9 @@ const Signin = () => {
             <input value={password} type="password" onChange={(e)=>setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder="*******"/>
         </div>
         
-        <p className="my-2">Pas encore inscrit ? <Link href="/"><a style={{color: 'crimson'}} className="navbar-brand">Inscription</a></Link></p>
-        <button type="submit" className="btn btn-success w-100" >Se connecter</button>
+        <p className="my-2">Pas encore inscrit ? <Link href="/register"><a style={{color: 'crimson'}} className="navbar-brand">Inscription</a></Link></p>
+        <button type="submit" className="btn btn-success w-100" >Se connecter</button><br /><br />
+        <button type="submit" className="btn btn-danger w-100" onClick={google}>Google</button>
         </form>
       </div>
     )

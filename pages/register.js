@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import {useState, useContext} from 'react';
 import {DataContext} from '../store/GlobalState';
+import Toast from '../components/Toast';
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -38,6 +39,7 @@ const Signin = () => {
         // const errorCode = error.code;
         const errorMessage = error.message;
         // alert(errorMessage)
+        <Toast />
         if(errorMessage) return dispatch({type: 'NOTIFY', payload: {error: errorMessage}})
         
     });
