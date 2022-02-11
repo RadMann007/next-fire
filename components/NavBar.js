@@ -19,7 +19,7 @@ export default function NavBar() {
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav">
     <li className="nav-item">
             <Link href="/notification">
@@ -29,7 +29,7 @@ export default function NavBar() {
             </Link>
         </li>
     </ul>
-    </div>
+    </div> */}
     <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
       <ul className="navbar-nav">
         <li className="nav-item">

@@ -41,10 +41,13 @@ const Signin = () => {
 
   const submitForm = (e) => {
     e.preventDefault()
-    setActiv(false);
-    // console.log("email: ",password);
-    // console.log("password: ",password);
-    signInWithEmailAndPassword(auth, email, password)
+    
+    // console.log(email)
+    if(email == undefined || password == undefined){
+      dispatch({type: 'NOTIFY', payload: {error: "Veuillez remplir tout les champs!"}})
+    }else{
+      setActiv(false);
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
@@ -61,6 +64,8 @@ const Signin = () => {
             const errorMessage = error.message;
             console.log(errorMessage)
         });
+    }
+    
   }
 
     return(
