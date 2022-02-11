@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import react, {useState} from 'react';
+import react, {useState, useContext} from 'react';
+import {DataContext} from '../store/GlobalState';
 
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -10,6 +11,9 @@ const Signin = () => {
 
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
+  const [activ,setActiv] = useState(true);
+
+  const [state, dispatch] = useContext(DataContext)
 
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
@@ -37,6 +41,7 @@ const Signin = () => {
 
   const submitForm = (e) => {
     e.preventDefault()
+    setActiv(false);
     // console.log("email: ",password);
     // console.log("password: ",password);
     signInWithEmailAndPassword(auth, email, password)
@@ -44,10 +49,14 @@ const Signin = () => {
             // Signed in 
             const user = userCredential.user;
             console.log(user);
+            setActiv(true);
+            // dispatch({type: 'NOTIFY', payload: {success: "Login success"}})
             window.location.replace("/notification");
             // ...
         })
         .catch((error) => {
+          dispatch({type: 'NOTIFY', payload: {error: "Login failed!"}})
+          setActiv(true);
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorMessage)
@@ -70,7 +79,10 @@ const Signin = () => {
         </div>
         
         <p className="my-2">Pas encore inscrit ? <Link href="/register"><a style={{color: 'crimson'}} className="navbar-brand">Inscription</a></Link></p>
-        <button type="submit" className="btn btn-success w-100" >Se connecter</button><br /><br />
+        <button type="submit" className="btn btn-success w-100" >
+        <div class="spinner-border spinner-border-sm" hidden={activ} role="status">
+  <span class="sr-only">Loading...</span>
+</div> Se connecter</button><br /><br />
         <button type="submit" className="btn btn-danger w-100" onClick={google}><i class="fab fa-google"></i>oogle</button>
         </form>
       </div>

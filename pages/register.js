@@ -22,17 +22,18 @@ const Signin = () => {
   const submitForm = (e) => {
     e.preventDefault()
     if(email == " " || password == " " || rePassword == " " || firstName == " "){
-        alert("remplir tout les champs")
+        dispatch({type: 'NOTIFY', payload: {error: "Veuillez remplir tout les champs"}})
         // return dispatch({type: 'NOTIFY', payload: {error: errorMessage}})
     }else{
         if( (password != rePassword) && (password != "") ){
-            alert("mdp different!")
+            dispatch({type: 'NOTIFY', payload: {error: "mot de passe different"}})
             // return dispatch({type: 'NOTIFY', payload: {error: errorMessage}})
         }else{
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         // window.location.replace("/");
         console.log(userCredential);
+        dispatch({type: 'NOTIFY', payload: {success: 'success!'}})
         // Signed in 
     })
     .catch((error) => {
